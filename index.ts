@@ -1,7 +1,10 @@
 import express, {Request, Response, Express} from "express"
+import sequelize from "./config/database"
+import dotenv from "dotenv"
+dotenv.config()
 const app: Express = express()
-const port:number = 3000 
-
+const port:number|string = process.env.PORT || 3000
+sequelize;
 app.set("views", "./views")
 app.set("view engine", "pug")
 app.get("/", (req: Request, res: Response)=>{
