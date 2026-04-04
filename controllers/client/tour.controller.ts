@@ -1,8 +1,13 @@
 import { QueryTypes } from "sequelize";
 import sequelize from "../../config/database";
 import { Request, Response } from "express";
+import Tour from "../../models/tour.model";
 
-
+interface ITour {
+  images?: string; // JSON string từ database
+  image?: string;  // Thuộc tính sẽ gán thêm vào
+  [key: string]: any; // Cho phép truy cập bằng key string
+}
 //[GET] /tours/:slugCategory
 export const index = async (req: Request, res: Response) => {
   const slugCategory = req.params.slugCategory;
@@ -28,13 +33,10 @@ export const index = async (req: Request, res: Response) => {
   `, {
     type: QueryTypes.SELECT
   })
-  interface Tour {
-  images?: string; // JSON string từ database
-  image?: string;  // Thuộc tính sẽ gán thêm vào
-  [key: string]: any; // Cho phép truy cập bằng key string
-}
-  tours.forEach((item: Tour) =>{
-    if(item["images"]){
+
+
+  tours.forEach((item: ITour) => {
+    if (item["images"]) {
       const images = JSON.parse(item["images"]);
       item["image"] = images[0];
     }
@@ -47,6 +49,26 @@ export const index = async (req: Request, res: Response) => {
 }
 //[GET] /tours/detail/:slugTour
 
-export const detail = async(req: Request, res: Response)=>{
-  res.render("client/pages/tours/detail")
+export const detail = async (req: Request, res: Response) => {
+  interface TourDetail extends ITour {
+    images: any; // Hoặc string[] sau khi parse
+  }
+  const slugTour = req.params.slugTour;
+  const tourDetail = await Tour.findOne({
+    where: {
+      slug: slugTour,
+      deleted: false,
+      status: "active"
+    }
+    , raw: true
+  }) as unknown as TourDetail
+  if (tourDetail["images"]) {
+    tourDetail["images"] = JSON.parse(tourDetail["images"])
+    tourDetail["special_price"] = tourDetail["price"] * (1 - tourDetail["discount"] / 100);
+
+  }
+
+  res.render("client/pages/tours/detail", {
+    tourDetail: tourDetail
+  })
 }
