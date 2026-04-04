@@ -45,3 +45,8 @@ export const index = async (req: Request, res: Response) => {
     pageTitle: "Danh sách tour"
   })
 }
+//[GET] /tours/detail/:slugTour
+
+export const detail = async(req: Request, res: Response)=>{
+  res.render("client/pages/tours/detail")
+}
