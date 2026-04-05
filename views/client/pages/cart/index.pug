@@ -23,37 +23,42 @@ block main
             
 
         h5(class="text-right mb-4") Tổng đơn hàng: <span total-price>0</span>đ
-      div(class="form-group")
-        label(for="fullName") Họ tên
-        input(
-          type="text"
-          class="form-control"
-          id="fullName"
-          name="fullName"
-          required
-        )
-      div(class="form-group")
-        label(for="phone") Số điện thoại
-        input(
-          type="text"
-          class="form-control"
-          id="phone"
-          name="phone"
-          required
-        )
-      div(class="form-group")
-        label(for="note") Ghi chú
-        textarea(
-          class="form-control"
-          id="note"
-          name="note"
-          rows="2"
-        )
-      div(class="form-group")
-        button(
-          type="submit"
-          class="btn btn-success btn-block"
-        ) ĐẶT TOUR
+      
+      form(
+
+              form-order
+            )
+        div(class="form-group")
+          label(for="fullName") Họ tên
+          input(
+            type="text"
+            class="form-control"
+            id="fullName" 
+            name="fullName"
+            required
+          )
+        div(class="form-group")
+          label(for="phone") Số điện thoại
+          input(
+            type="text"
+            class="form-control"
+            id="phone"
+            name="phone"
+            required
+          )
+        div(class="form-group")
+          label(for="note") Ghi chú
+          textarea(
+            class="form-control"
+            id="note"
+            name="note"
+            rows="2"
+          )
+        div(class="form-group")
+          button(
+            type="submit"
+            class="btn btn-success btn-block"
+          ) ĐẶT TOUR
 
 
 block script 
