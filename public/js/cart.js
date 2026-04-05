@@ -1,5 +1,6 @@
-//Lấy ra data và in ra giao diện 
-fetch("http://localhost:3000/cart/list-json",{
+//Vẽ ra danh sách tour
+const drawListTour = ()=>{
+  fetch("http://localhost:3000/cart/list-json",{
   method: "POST",
   headers: {
     "Content-Type": "application/json"
@@ -8,7 +9,6 @@ fetch("http://localhost:3000/cart/list-json",{
 })
   .then(res=> res.json())
   .then(data =>{
-    console.log(data);
 
 
     const htmlsArray = data.tours.map((item,index)=>{
@@ -33,14 +33,39 @@ fetch("http://localhost:3000/cart/list-json",{
         </td>
       </tr>`
     })
-
     const listTour = document.querySelector("[list-tour]");
     listTour.innerHTML = htmlsArray.join("");
 
-
+    deleteItemCart();
     //Tính tổng đơn hàng
     const totalPrice = data.tours.reduce((sum,item)=> sum + item.total,0)
     const totalPreview = document.querySelector("[total-price]")
     totalPreview.innerHTML = totalPrice.toLocaleString()
+  });
+}
+//End vẽ danh sách tour
+//xóa sản phẩm trong giỏ hàng
+const deleteItemCart = ()=>{
+  const listBtnDelete  = document.querySelectorAll("[btn-delete]");
+  console.log(listBtnDelete)
+  listBtnDelete.forEach(button =>{
+    button.addEventListener("click", ()=>{
+      const tourId = button.getAttribute("btn-delete");
+
+      const cart = JSON.parse(localStorage.getItem("cart"))
+
+      const newCart = cart.filter(item => item.tourId != tourId);
+
+      localStorage.setItem("cart", JSON.stringify(newCart));
+
+drawListTour();
+      
+    })
   })
+}
+//End Xóa sản phẩm tron giỏ hàng
+//Lấy ra data và in ra giao diện 
+drawListTour();
 //Hết Lấy ra data và in ra giao diện 
+
+
