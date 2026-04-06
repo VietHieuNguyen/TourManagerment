@@ -1,6 +1,7 @@
 import express, {Express} from "express"
 import dotenv from "dotenv"
 import clientRoutes from "./routes/client/index.route"
+import path from "path"
 dotenv.config()
 import moment from "moment"
 import adminRoutes from "./routes/admin/index.route"
@@ -14,6 +15,14 @@ app.set("view engine", "pug")
 app.use(express.json())
 app.use(express.urlencoded({extended:false}))
 app.use(express.static("public"))
+
+//TinyMCE 
+app.use(
+  "/tinymce",
+  express.static(path.join(__dirname, "node_modules", "tinymce"))
+)
+// End TinyMCe
+
 // App Local Variables
 
 app.locals.moment = moment
