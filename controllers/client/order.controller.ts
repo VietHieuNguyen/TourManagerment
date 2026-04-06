@@ -70,3 +70,8 @@ for(const item of data.cart){
     orderCode: code
   })
 }
+
+//[GET] /order/success
+export const success = async (req: Request, res: Response)=>{
+  res.render("client/pages/order/success")
+}

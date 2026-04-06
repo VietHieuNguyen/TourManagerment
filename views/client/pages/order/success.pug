@@ -1,0 +1,56 @@
+extends ../../layouts/default.pug
+include ../../mixins/box-head.pug
+
+block main
+  .container.my-3
+    .row
+      .col-12
+        div(class="alert alert-success") Chúc mừng bạn đã đặt hàng thành công! Mã đơn hàng của bạn là
+
+    .row
+      .col-12
+        +box-head("Thông tin khách hàng")
+
+        table(class="table table-bordered")
+          tbody
+            tr
+              td Họ tên
+              td 
+            tr
+              td Số điện thoại
+              td 
+            tr
+              td Ghi chú
+              td 
+            tr
+              td Ngày đặt
+              td
+
+    .row
+      .col-12
+        +box-head("Danh sách tour")
+
+        table(class="table table-bordered")
+          thead
+            tr
+              th STT
+              th Ảnh
+              th Tiêu đề
+              th Giá
+              th Số lượng
+              th Tổng tiền
+          tbody
+            tr
+              td 
+              td
+                img(
+                  src=
+                  width="80px"
+                )
+              td
+                a(href=`/tours/detail/`) 
+              td 
+              td 
+              td 
+
+      h5(class="text-right mb-4") Tổng đơn hàng: 
