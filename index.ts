@@ -3,6 +3,8 @@ import dotenv from "dotenv"
 import clientRoutes from "./routes/client/index.route"
 dotenv.config()
 import moment from "moment"
+import adminRoutes from "./routes/admin/index.route"
+import { systemConfig } from "./config/system"
 const app: Express = express()
 const port:number|string = process.env.PORT || 3000
 
@@ -15,7 +17,9 @@ app.use(express.static("public"))
 // App Local Variables
 
 app.locals.moment = moment
+app.locals.prefixAdmin = systemConfig.prefixAdmin
 clientRoutes(app)
+adminRoutes(app)
 app.listen(port, ()=>{
   console.log(`App listening on port: ${port}`)
 }) 
