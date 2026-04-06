@@ -5,7 +5,7 @@ block main
   .container.my-3
     .row
       .col-12
-        div(class="alert alert-success") Chúc mừng bạn đã đặt hàng thành công! Mã đơn hàng của bạn là
+        div(class="alert alert-success") Chúc mừng bạn đã đặt hàng thành công! Mã đơn hàng của bạn là <b>#{order.code}</b>
 
     .row
       .col-12
@@ -15,16 +15,16 @@ block main
           tbody
             tr
               td Họ tên
-              td 
+              td #{order.fullName}
             tr
               td Số điện thoại
-              td 
+              td #{order.phone}
             tr
               td Ghi chú
-              td 
+              td #{order.note}
             tr
               td Ngày đặt
-              td
+              td #{order.createAt}
 
     .row
       .col-12
@@ -40,17 +40,18 @@ block main
               th Số lượng
               th Tổng tiền
           tbody
-            tr
-              td 
-              td
-                img(
-                  src=
-                  width="80px"
-                )
-              td
-                a(href=`/tours/detail/`) 
-              td 
-              td 
-              td 
+            each item, index in orderItem
+              tr
+                td #{index + 1}
+                td
+                  img(
+                    src=item.image, alt=item.title
+                    width="80px"
+                  )
+                td
+                  a(href=`/tours/detail/${item.slug}`)  #{item.title}
+                td #{item.price_special.toLocaleString()}đ
+                td #{item.quantity}
+                td #{item.total.toLocaleString()}đ
 
-      h5(class="text-right mb-4") Tổng đơn hàng: 
+      h5(class="text-right mb-4") Tổng đơn hàng: #{order.total_price.toLocaleString()}đ

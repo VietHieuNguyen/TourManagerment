@@ -12,9 +12,7 @@ export const index = async  (req: Request, res: Response)=>{
       status: "active"
     }
     ,raw: true
-  }
-  
-  )
+  })
 
   res.render("client/pages/category/index",{
     categories: categories,

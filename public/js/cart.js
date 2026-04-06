@@ -118,9 +118,10 @@ if(formOrder){
     })
       .then(res => res.json())
       .then(data =>{
+        console.log(data)
         if(data.code == 200){
           localStorage.removeItem("cart")
-          window.location.href = `order/success?${data.orderCode}`
+          window.location.href = `order/success?orderCode=${data.orderCode}`
         }else{
           alert("Thất bại")
         }
