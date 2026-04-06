@@ -3,6 +3,8 @@ import { Request, Response } from "express";
 import Tour from "../../models/tour.model";
 import Category from "../../models/category.model";
 import { generateTourCode } from "../../helpers/generate";
+import { systemConfig } from "../../config/system";
+import TourCategory from "../../models/tour-category.model";
 
 //[GET] /admin/categories
 export const index = async  (req: Request, res: Response)=>{
@@ -46,7 +48,7 @@ export const createPost = async (req: Request, res: Response)=>{
   const countTour = await Tour.count()
   const code = generateTourCode(countTour+1)
   if(req.body.position === ''){
-    req.body.positon = countTour + 1
+    req.body.position = countTour + 1
   }else{
     req.body.position = parseInt(req.body.position)
   }
@@ -60,5 +62,14 @@ export const createPost = async (req: Request, res: Response)=>{
     position: req.body.position,
     status: req.body.status
   }
-  console.log(dataTour)
+  const tour = await Tour.create(dataTour) as any
+  // console.log(parseInt(req.body.category_id))
+  const tourId = tour["id"];
+
+  const dataTourCategory = {
+    tour_id: tourId,
+    category_id: parseInt(req.body.category_id)
+  }
+  await TourCategory.create(dataTourCategory)
+  res.redirect(`/${systemConfig.prefixAdmin}/tours`)
 }

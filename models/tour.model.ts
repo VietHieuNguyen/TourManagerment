@@ -1,6 +1,6 @@
 import { DataTypes } from "sequelize";
 import sequelize from "../config/database";
-
+import slugify from "slugify"
 const Tour = sequelize.define("Tour",{
   id: {
     type: DataTypes.INTEGER,
@@ -40,7 +40,8 @@ const Tour = sequelize.define("Tour",{
     type: DataTypes.STRING(20)
   },
   slug:{
-    type: DataTypes.STRING(20)
+    type: DataTypes.STRING(20),
+    allowNull: true
   },
   position:{
     type: DataTypes.INTEGER
@@ -56,4 +57,10 @@ const Tour = sequelize.define("Tour",{
   tableName: "tours",
   timestamps: true
 });
+Tour.beforeCreate((tour:any)=>{
+  tour.slug = slugify(`${tour.title}-${Date.now()}`,{
+    lower: true,
+    strict: true
+  })
+})
 export default Tour;
